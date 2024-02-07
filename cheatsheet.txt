@@ -1,0 +1,14 @@
+
+
+
+
+
+# Remove all containers by prefix
+docker ps -aq --filter name="redis-cluster*" | xargs docker stop | xargs docker rm
+
+
+# Lists ip addresses of all containers
+docker ps -q | xargs -n 1 docker inspect --format '{{ .Name }} {{range .NetworkSettings.Networks}} {{.IPAddress}}{{end}}' | sed 's#^/##';
+
+# Docker exec 
+docker exec -it redis-cluster-with-sentinel-slave-6 /bin/bash
